@@ -109,8 +109,45 @@ src/main/resources/
 
 ## Actividades propuestas
 1. Revisar el código de configuración de seguridad (`SecurityConfig`) e identificar cómo se definen los endpoints públicos y protegidos.
+
+### Endpoints públicos (permitAll):
+
+- /actuator/health
+- /auth/login
+- /v3/api-docs/, /swagger-ui/, /swagger-ui.html
+- Endpoints protegidos con autorización por scope:
+
+- /api/** → requiere cualquiera de las autoridades: "SCOPE_blueprints.read" o "SCOPE_blueprints.write"
+Resto de endpoints:
+
+- anyRequest().authenticated() → autenticación obligatoria (pero sin exigir scopes concretos)
+
 2. Explorar el flujo de login y analizar las claims del JWT emitido.
+
+- Flujo de login:
+
+  El cliente envía credenciales (por ejemplo, POST a /auth/login).
+  El servidor valida las credenciales (contraseñas almacenadas con BCrypt).
+  Si la autenticación es correcta, se genera un JWT firmado con la clave RSA privada (mediante el bean JwtEncoder).
+  El servidor devuelve el token al cliente; el cliente lo envía en futuras peticiones en el encabezado Authorization: Bearer <token>.
+  El recurso protege endpoints mediante el resource server JWT: el servidor verifica la firma con la clave pública (bean JwtDecoder) y extrae las autoridades/claims.
+
+- Claims esperadas en el JWT:
+
+  sub — sujeto (usuario).
+  iat — issued at (fecha/hora de emisión).
+  exp — expiration (fecha/hora de expiración).
+  scope o scp — scopes asignados (por ejemplo blueprints.read, blueprints.write). Spring convierte estos scopes a autoridades con prefijo SCOPE_ (p. ej. SCOPE_blueprints.read).
+  Otros claims estándar opcionales: iss (issuer), jti (id del token), etc.
+
+-Autorización aplicada:
+
+  Endpoints /api/** requieren al menos uno de los scopes blueprints.read o blueprints.write (evaluados como SCOPE_blueprints.read / SCOPE_blueprints.write).
+  Endpoints públicos: /actuator/health, /auth/login, y rutas de OpenAPI/Swagger.
+
 3. Extender los scopes (`blueprints.read`, `blueprints.write`) para controlar otros endpoints de la API, del laboratorio P1 trabajado.
+
+
 4. Modificar el tiempo de expiración del token y observar el efecto.
 5. Documentar en Swagger los endpoints de autenticación y de negocio.
 

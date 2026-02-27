@@ -2,6 +2,9 @@ server:
   port: 8080
 
 spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
   security:
     oauth2:
       resourceserver:
@@ -9,6 +12,11 @@ spring:
           jwk-set-uri: https://auth.example.com/.well-known/jwks.json
   main:
     allow-bean-definition-overriding: true
+
+management:
+  health:
+    db:
+      enabled: false
 
 blueprints:
   security:

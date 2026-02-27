@@ -156,6 +156,8 @@ Resto de endpoints:
 
 5. Documentar en Swagger los endpoints de autenticación y de negocio.
 
+  Con el laboratorio ejecutando, swagger se encuentra en `http://localhost:8080/swagger-ui/index.html#/`
+  ![Swagger](img\swagger.png)
 ---
 
 ## Lecturas recomendadas

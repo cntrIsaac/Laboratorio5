@@ -151,6 +151,9 @@ Resto de endpoints:
 
 
 4. Modificar el tiempo de expiración del token y observar el efecto.
+
+  Se ajustó `blueprints.security.token-ttl-seconds` en `application.yml` a `60` segundos. Al autenticarse en `/auth/login`, la respuesta ahora retorna `"expires_in": 60`; después de 1 minuto, el token expira y los endpoints protegidos responden `401 Unauthorized` al reutilizarlo.
+
 5. Documentar en Swagger los endpoints de autenticación y de negocio.
 
 ---

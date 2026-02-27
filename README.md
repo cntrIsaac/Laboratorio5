@@ -158,7 +158,7 @@ Resto de endpoints:
 
   Con el laboratorio ejecutando, swagger se encuentra en `http://localhost:8080/swagger-ui/index.html#/`
   
-  ![Swagger](img\swagger.png)
+![Swagger](img\swagger.png)
 ---
 
 ## Lecturas recomendadas

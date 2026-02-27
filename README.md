@@ -140,12 +140,14 @@ Resto de endpoints:
   scope o scp — scopes asignados (por ejemplo blueprints.read, blueprints.write). Spring convierte estos scopes a autoridades con prefijo SCOPE_ (p. ej. SCOPE_blueprints.read).
   Otros claims estándar opcionales: iss (issuer), jti (id del token), etc.
 
--Autorización aplicada:
+- Autorización aplicada:
 
   Endpoints /api/** requieren al menos uno de los scopes blueprints.read o blueprints.write (evaluados como SCOPE_blueprints.read / SCOPE_blueprints.write).
   Endpoints públicos: /actuator/health, /auth/login, y rutas de OpenAPI/Swagger.
 
 3. Extender los scopes (`blueprints.read`, `blueprints.write`) para controlar otros endpoints de la API, del laboratorio P1 trabajado.
+
+ Se integraron y mantuvieron en Swagger todos los endpoints desarrollados en la Parte 1 (BlueprintsAPIController), garantizando su disponibilidad en la documentación y pruebas del API actual; además, se aplicó el esquema de seguridad por scopes para controlar su acceso de forma consistente (blueprints.read para consulta y blueprints.write para operaciones de creación/actualización).
 
 
 4. Modificar el tiempo de expiración del token y observar el efecto.
